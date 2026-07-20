@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.zhanan'
+version = '1.0.0'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    // 如果你有私有 maven repo 放 nukkit-mot，请在这里添加
+}
+
+dependencies {
+    // 编译时依赖 Nukkit API（通常使用服务器的 nukkit.jar 作为 provided/compileOnly）
+    compileOnly files('libs/nukkit.jar')
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'VariableManage',
+            'Implementation-Version': version
+        )
+    }
+    archiveBaseName.set('VariableManage')
+}
