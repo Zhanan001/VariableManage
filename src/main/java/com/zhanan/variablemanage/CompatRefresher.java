@@ -1,7 +1,5 @@
 package com.zhanan.variablemanage;
 
-import com.smallaswater.npc.variable.VariableManage as SmVarManage; // alias for clarity
-
 public class CompatRefresher {
 
     /**
