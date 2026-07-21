@@ -19,14 +19,15 @@ repositories {
 }
 
 dependencies {
-    // Use Nukkit (NukkitX) as a compileOnly dependency so CI can resolve the API from Maven
-    // Keep the canonical Nukkit API coordinate as first choice
-    compileOnly 'cn.nukkit:nukkit:1.0-SNAPSHOT'
+    // Use Nukkit-MOT (MemoriesOfTime) published artifact which provides the Nukkit API classes used by the code.
+    // com.nukkit-mot:nukkit-mot is published on Maven Central; pick a concrete release version instead of SNAPSHOT.
+    compileOnly 'com.nukkit-mot:nukkit-mot:1.26.30-R1'
 
-    // NOTE: removed an invalid JitPack master-SNAPSHOT fallback (com.github.MemoriesOfTime:Nukkit-MOT:master-SNAPSHOT)
-    // which caused resolution failures in CI. If you want to depend on Nukkit-MOT, add a specific released tag
-    // (for example, 'com.github.MemoriesOfTime:Nukkit-MOT:1.2.3') or add the correct groupId/artifactId from the
-    // upstream Maven repository (e.g. repo.lanink.cn) and a concrete version.
+    // If you want to prefer the upstream cn.nukkit API instead, you can keep the following (optional):
+    // compileOnly 'cn.nukkit:nukkit:1.0-SNAPSHOT'
+
+    // Local fallback (uncomment if you add the jar to libs/)
+    // compileOnly files('libs/nukkit-mot.jar')
 }
 
 jar {
