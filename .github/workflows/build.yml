@@ -22,10 +22,13 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Run Gradle build
+      # Install a specific Gradle version on the runner and run the build.
+      # This avoids needing a gradlew file in the repo.
+      - name: Install Gradle and build
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: build
+          gradle-version: '8.3'    # <- choose the Gradle version your project requires
+          arguments: build --no-daemon
 
       - name: Upload built jar
         uses: actions/upload-artifact@v4
