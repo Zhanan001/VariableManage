@@ -23,9 +23,10 @@ dependencies {
     // Keep the canonical Nukkit API coordinate as first choice
     compileOnly 'cn.nukkit:nukkit:1.0-SNAPSHOT'
 
-    // Fallback: MemoriesOfTime's Nukkit-MOT provides compatibility shims and may be published on JitPack or lanink repo.
-    // Adding a compileOnly dependency on the project via JitPack can help if the API is packaged there.
-    compileOnly 'com.github.MemoriesOfTime:Nukkit-MOT:master-SNAPSHOT'
+    // NOTE: removed an invalid JitPack master-SNAPSHOT fallback (com.github.MemoriesOfTime:Nukkit-MOT:master-SNAPSHOT)
+    // which caused resolution failures in CI. If you want to depend on Nukkit-MOT, add a specific released tag
+    // (for example, 'com.github.MemoriesOfTime:Nukkit-MOT:1.2.3') or add the correct groupId/artifactId from the
+    // upstream Maven repository (e.g. repo.lanink.cn) and a concrete version.
 }
 
 jar {
@@ -37,5 +38,3 @@ jar {
     }
     archiveBaseName.set('VariableManage')
 }
-
-// CI trigger: commit to re-run GitHub Actions - 2026-07-21T06:50:00Z
