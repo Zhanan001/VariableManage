@@ -10,7 +10,8 @@ targetCompatibility = '11'
 repositories {
     mavenCentral()
     // Nukkit / NukkitX artifacts are hosted on opencollab and sometimes on jitpack
-    maven { url 'https://repo.opencollab.dev/main' }
+    // Use the public opencollab maven repository that hosts Nukkit artifacts
+    maven { url 'https://repo.opencollab.dev/repository/maven-public/' }
     maven { url 'https://jitpack.io' }
 }
 
