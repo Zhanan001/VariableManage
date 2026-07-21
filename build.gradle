@@ -9,12 +9,15 @@ targetCompatibility = '11'
 
 repositories {
     mavenCentral()
-    // 如果你有私有 maven repo 放 nukkit-mot，请在这里添加
+    // Nukkit / NukkitX artifacts are hosted on opencollab and sometimes on jitpack
+    maven { url 'https://repo.opencollab.dev/main' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    // 编译时依赖 Nukkit API（通常使用服务器的 nukkit.jar 作为 provided/compileOnly）
-    compileOnly files('libs/nukkit.jar')
+    // Use Nukkit (NukkitX) as a compileOnly dependency so CI can resolve the API from Maven
+    // Replace the version if you need a specific release. If resolution fails, try a different coordinate or add the snapshots repo.
+    compileOnly 'cn.nukkit:nukkit:1.0-SNAPSHOT'
 }
 
 jar {
