@@ -10,15 +10,22 @@ targetCompatibility = '11'
 repositories {
     mavenCentral()
     // Nukkit / NukkitX artifacts are hosted on opencollab and sometimes on jitpack
-    // Use the public opencollab maven repository that hosts Nukkit artifacts
+    // Add OpenCollab release + snapshot repositories and the public aggregator to ensure CI can resolve the Nukkit API
+    maven { url 'https://repo.opencollab.dev/maven-releases' }
+    maven { url 'https://repo.opencollab.dev/maven-snapshots' }
     maven { url 'https://repo.opencollab.dev/repository/maven-public/' }
+    maven { url 'https://repo.lanink.cn/repository/maven-public/' }
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     // Use Nukkit (NukkitX) as a compileOnly dependency so CI can resolve the API from Maven
-    // Replace the version if you need a specific release. If resolution fails, try a different coordinate or add the snapshots repo.
+    // Keep the canonical Nukkit API coordinate as first choice
     compileOnly 'cn.nukkit:nukkit:1.0-SNAPSHOT'
+
+    // Fallback: MemoriesOfTime's Nukkit-MOT provides compatibility shims and may be published on JitPack or lanink repo.
+    // Adding a compileOnly dependency on the project via JitPack can help if the API is packaged there.
+    compileOnly 'com.github.MemoriesOfTime:Nukkit-MOT:master-SNAPSHOT'
 }
 
 jar {
