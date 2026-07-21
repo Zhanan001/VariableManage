@@ -10,7 +10,7 @@ public class VarCommand extends Command {
     private final VariableService service;
 
     public VarCommand(String name, VariableService service) {
-        super(name, "VariableManage command", "/var <get|set|del|list> ...", null);
+        super(name, "VariableManage command", "/var <get|set|del|list|refresh> ...", null);
         this.service = service;
     }
 
@@ -21,6 +21,7 @@ public class VarCommand extends Command {
             sender.sendMessage("/var get <key>");
             sender.sendMessage("/var del <key>");
             sender.sendMessage("/var list");
+            sender.sendMessage("/var refresh");
             return true;
         }
         String cmd = args[0].toLowerCase();
@@ -66,6 +67,20 @@ public class VarCommand extends Command {
                     for (Map.Entry<String,String> e : all.entrySet()) {
                         sender.sendMessage(e.getKey() + " = " + e.getValue());
                     }
+                }
+                return true;
+            case "refresh":
+                // trigger compatibility refresh
+                try{
+                    VariableManage vm = VariableManage.getInstance();
+                    if(vm != null){
+                        vm.refreshCompatibility();
+                        sender.sendMessage("Compatibility refresh triggered.");
+                    }else{
+                        sender.sendMessage("VariableManage not initialized.");
+                    }
+                }catch (Exception ex){
+                    sender.sendMessage("Refresh failed: " + ex.getMessage());
                 }
                 return true;
             default:

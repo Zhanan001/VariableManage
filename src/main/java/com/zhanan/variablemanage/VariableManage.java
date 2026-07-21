@@ -4,7 +4,6 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 
 import java.io.File;
-import java.util.Map;
 
 public class VariableManage extends PluginBase {
 
@@ -23,7 +22,20 @@ public class VariableManage extends PluginBase {
         this.variableService = new VariableService(cfg);
         // register command
         this.getServer().getCommandMap().register("var", new VarCommand("var", this.getVariableService()));
-        // register listeners if needed (none by default)
+        // start compatibility refresher to pull variables from registered shims (BedWar compatibility)
+        try{
+            // schedule every 5 seconds (100 ticks)
+            this.getServer().getScheduler().scheduleRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    CompatRefresher.refreshOnce();
+                }
+            }, 100);
+            this.getLogger().info("VariableManage compatibility refresher scheduled (every 5s)");
+        }catch (Throwable t){
+            // If scheduling fails, log but continue (older/newer API differences)
+            this.getLogger().warning("Failed to schedule compatibility refresher: " + t.getMessage());
+        }
         this.getLogger().info("VariableManage enabled.");
     }
 
@@ -41,5 +53,12 @@ public class VariableManage extends PluginBase {
 
     public VariableService getVariableService() {
         return variableService;
+    }
+
+    /**
+     * Trigger a one-time compatibility refresh from registered external variable providers
+     */
+    public void refreshCompatibility() {
+        CompatRefresher.refreshOnce();
     }
 }
