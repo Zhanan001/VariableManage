@@ -37,3 +37,5 @@ jar {
     }
     archiveBaseName.set('VariableManage')
 }
+
+// CI trigger: commit to re-run GitHub Actions - 2026-07-21T06:50:00Z
